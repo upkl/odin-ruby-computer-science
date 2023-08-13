@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def merge_sort(array)
   return array if array.length <= 1
 
@@ -7,7 +9,7 @@ def merge_sort(array)
   p2 = merge_sort(array[middle...])
 
   result = []
-  while p1.length + p2.length > 0
+  while (p1.length + p2.length).positive?
     if p1.empty?
       result += p2
       break
@@ -15,11 +17,11 @@ def merge_sort(array)
       result += p1
       break
     else
-      if p1[0] < p2[0]
-        result << p1.shift
-      else
-        result << p2.shift
-      end
+      result << if p1[0] < p2[0]
+                  p1.shift
+                else
+                  p2.shift
+                end
     end
   end
 

@@ -1,18 +1,16 @@
-def fibs len
+# frozen_string_literal: true
+
+def fibs(len)
   result = [0, 1]
-  while result.length < len
-    result << result[-2] + result[-1]
-  end
+  result << result[-2] + result[-1] while result.length < len
   result[0..len]
 end
 
-def fibs_rec n
-  if n <= 2
-    return [0, 1][0..n]
-  end
+def fibs_rec(num)
+  return [0, 1][0..num] if n <= 2
 
-  r = fibs_rec(n - 1)
-  p n, r
-  r << r[-2] + r[-1]
-  r
+  res = fibs_rec(num - 1)
+  p num, res
+  res << res[-2] + res[-1]
+  res
 end

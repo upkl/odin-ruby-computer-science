@@ -1,22 +1,17 @@
+# frozen_string_literal: true
+
+# A node for my LinkedList
 class Node
-  def initialize(value=nil)
+  attr_reader :value, :head
+  attr_accessor :next_node
+
+  def initialize(value = nil)
     @value = value
     @next_node = nil
   end
-
-  def value
-    @value
-  end
-
-  def next_node=(n)
-    @next_node = n
-  end
-
-  def next_node
-    @next_node
-  end
 end
 
+# A linked list
 class LinkedList
   def initialize
     @head = nil
@@ -34,16 +29,13 @@ class LinkedList
 
   def prepend(value)
     n = Node.new(value)
-    if @head.nil?
-      @head = n
-    else
-      n.next_node = @head
-      @head = n
-    end
+    n.next_node = @head
+    @head = n
   end
 
   def size
     return 0 if @head.nil?
+
     s = 1
     n = @head
     until n.next_node.nil?
@@ -53,27 +45,22 @@ class LinkedList
     s
   end
 
-  def head
-    @head
-  end
-
   def tail
     if @head.nil?
       nil
     else
       n = head
-      until n.next_node.nil?
-        n = n.next_node
-      end
-      n
+      n = n.next_node until n.next_node.nil?
     end
   end
 
   def at(index)
     return nil if @head.nil?
+
     n = @head
     (0...index).each do
       return nil if n.next_node.nil?
+
       n = n.next_node
     end
     n.value
@@ -88,9 +75,7 @@ class LinkedList
       value
     else
       n = head
-      until n.next_node.next_node.nil?
-        n = n.next_node
-      end
+      n = n.next_node until n.next_node.next_node.nil?
       value = n.next_node.value
       n.next_node = nil
       value
@@ -98,24 +83,22 @@ class LinkedList
   end
 
   def contains?(value)
-    if @head.nil?
-      false
-    else
+    unless @head.nil?
       return true if @head.value == value
+
       n = @head
       until n.next_node.nil?
         n = n.next_node
         return true if n.value == value
       end
-      false
     end
+    false
   end
 
   def find(value)
-    if @head.nil?
-      nil
-    else
+    unless @head.nil?
       return 0 if @head.value == value
+
       n = @head
       i = 0
       until n.next_node.nil?
@@ -123,21 +106,18 @@ class LinkedList
         i += 1
         return i if n.value == value
       end
-      nil
     end
+    nil
   end
 
   def to_s
     values = []
     n = @head
     loop do
-      if n.nil?
-        return (values + ["nil"]).join(" -> ")
-      else
-        values << "( #{n.value} )"
-        n = n.next_node
-      end
+      return (values + ['nil']).join(' -> ') if n.nil?
+
+      values << "( #{n.value} )"
+      n = n.next_node
     end
   end
 end
-      
